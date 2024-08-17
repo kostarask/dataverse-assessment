@@ -1,0 +1,18 @@
+{
+    "Name": "Ονοματεπώνυμο",
+    "Welcome": "Καλωσήρθες",
+    "Log Out": "Αποσύνδεση",
+    "Log In": "Σύνδεση",
+    "Register": "Δημιουργία Χρήστη",
+    "Sign in to your account": "Συνδεθείτε στον Λογαριασμό σας",
+    "Users": "Χρήστες",
+    "Roles": "Ρόλοι",
+    "Technical Administrator": "Τεχνικός Διαχειριστής",
+    "User and Subscription Administrator": "Διαχειριστής Χρηστών και Συνδρομών",
+    "Questions/Answers Administrator": "Διαχειριστής Ερωτημάτων/Απαντήσεων",
+    "Content Administrator": "Διαχειριστής Περιεχομένου",
+    "Legal Administrator": "Διαχειριστής Νομολογίας - Νομοθεσίας",
+    "Newsletter Administrator": "Διαχειριστής Ενημερωτικών Δελτίων",
+    "Welcome to the Users Administration Tool": "Καλωσήρθατε στο Εργαλείο Διαχείρησης Χρηστών",
+    "My name is Konstantinos and this is my attempt at building a users administration tool": "Ονομάζομαι Κωνσταντίνος και αυτή είναι η προσπάθειά μου για την κατασκευή ενός εργαλείου διαχείρισης χρηστών."
+}

@@ -3,7 +3,6 @@
 namespace App\Datatables;
 
 use App\Models\Role;
-use App\Models\User;
 use Yajra\DataTables\DataTableAbstract;
 use Yajra\DataTables\Exceptions\Exception;
 
@@ -29,6 +28,9 @@ class RolesDatatable
                 return view('roles.actions', [
                     'role' => $role,
                 ]);
+            })
+            ->addColumn('created_at', function ($role) {
+                return $role->created_at->format('Y-m-d H:i:s');
             })
             ->addIndexColumn()
             ->order(function ($query) {

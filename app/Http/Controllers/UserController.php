@@ -35,7 +35,7 @@ class UserController extends Controller
             DB::beginTransaction();
 
             $user = User::create($formData);
-            $user->roles()->syncWithoutDetaching($roles);
+            $user->roles()->sync($roles);
 
             DB::commit();
         }catch (\Exception $e){
@@ -68,7 +68,7 @@ class UserController extends Controller
             DB::beginTransaction();
 
             $user->update($formData);
-            $user->roles()->syncWithoutDetaching($roles);
+            $user->roles()->sync($roles);
 
             DB::commit();
         }catch (\Exception $e){

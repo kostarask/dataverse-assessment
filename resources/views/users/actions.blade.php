@@ -25,7 +25,6 @@
                     },
                     dataType: 'json',
                     success: function(data) {
-                        console.log(data);
                         $('#users-table').DataTable().ajax.reload();
                         if (data.success) {
 

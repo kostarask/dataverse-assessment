@@ -57,7 +57,7 @@
         </div>
         <label class="form-control-label">{{ __('Roles') }}</label>
         @foreach($roles as $role)
-            <div class="col-12">
+            <div class="col-3">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="{{ $role->id }}" name="roles[]" id="roles[{{ $role->id }}]" {{ isset($user) && $user?->roles?->contains($role) ? 'checked' : ''}}>
                     <label class="form-check-label" for="roles[{{ $role->id }}]">
@@ -80,35 +80,6 @@
     let flashSuccess = $(".flash-notification-success");
     let flashError = $(".flash-notification-error");
 
-    let csrfToken = '{{ csrf_token() }}';
-    let oTable = $('#users-table').DataTable({
-        processing: true,
-        serverSide: true,
-        filter: true,
-        ajax: {
-            url: '{!! route('users.getDatatableData', Request::all()) !!}',
-            type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': csrfToken
-            }
-        },
-        columnDefs: [{
-            targets: [0],
-            visible: false,
-            searchable: false
-        }],
-        columns: [
-            { data: 'id', name:'id' },
-            { data: 'name', name:'name' },
-            { data: 'username', name:'username' },
-            { data: 'roles', name:'roles' },
-            { data: 'is_active', name:'is_active' },
-            { data: 'actions', name:'actions' }
-        ],
-        order: [[0, 'desc']]
-    });
-
-
     $('#userCreateForm').submit(function(e) {
         e.preventDefault();
 
@@ -119,7 +90,7 @@
             url: "{{ route('user.store') }}",
             type:'POST',
             headers: {
-                'X-CSRF-TOKEN': csrfToken
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
             data: formData,
             cache:false,
@@ -127,7 +98,7 @@
             processData: false,
             success: (data) => {
                 $("#user-create-modal").modal('hide');
-                oTable.draw(false);
+                $('#users-table').DataTable().ajax.reload();
                 $("#btn-save").html('Submit');
                 $("#btn-save").attr("disabled", false);
 
@@ -166,7 +137,7 @@
             url: "{{ route('user.update', $user ?? '') }}",
             type:'POST',
             headers: {
-                'X-CSRF-TOKEN': csrfToken
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
             data: formData,
             cache:false,
@@ -174,7 +145,7 @@
             processData: false,
             success: (data) => {
                 $("#user-create-modal").modal('hide');
-                oTable.draw(false);
+                $('#users-table').DataTable().ajax.reload();
                 $("#btn-save").html('Submit');
                 $("#btn-save").attr("disabled", false);
 

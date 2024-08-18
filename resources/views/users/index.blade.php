@@ -36,6 +36,34 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.datatables.net/2.1.3/js/dataTables.js"></script>
 <script>
+    $(document).ready(function() {
+        let oTable = $('#users-table').DataTable({
+            processing: true,
+            serverSide: true,
+            filter: true,
+            ajax: {
+                url: '{!! route('users.getDatatableData', Request::all()) !!}',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            },
+            columnDefs: [{
+                targets: [0],
+                visible: false,
+                searchable: false
+            }],
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'name', name: 'name'},
+                {data: 'username', name: 'username'},
+                {data: 'roles', name: 'roles'},
+                {data: 'is_active', name: 'is_active'},
+                {data: 'actions', name: 'actions'}
+            ],
+            order: [[0, 'desc']]
+        });
+    });
 
     function add(){
         $('#userCreateForm').trigger("reset");

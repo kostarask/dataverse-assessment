@@ -8,6 +8,10 @@
     "Sign in to your account": "Συνδεθείτε στον Λογαριασμό σας",
     "Users": "Χρήστες",
     "Roles": "Ρόλοι",
+    "Permissions": "Άδειες",
+    "New User": "Νέος Χρήστης",
+    "New Role": "Νέος Ρόλος",
+    "New Permission": "Νέα Άδεια",
     "Technical Administrator": "Τεχνικός Διαχειριστής",
     "User and Subscription Administrator": "Διαχειριστής Χρηστών και Συνδρομών",
     "Questions/Answers Administrator": "Διαχειριστής Ερωτημάτων/Απαντήσεων",
@@ -18,6 +22,7 @@
     "My name is Konstantinos and this is my attempt at building a users administration tool": "Ονομάζομαι Κωνσταντίνος και αυτή είναι η προσπάθειά μου για την κατασκευή ενός εργαλείου διαχείρισης χρηστών.",
     "Create User": "Δημιουργία Χρήστη",
     "Create Role": "Δημιουργία Ρόλου",
+    "Create Permission": "Δημιουργία Άδειας",
     "Edit": "Επεξεργασία",
     "Delete": "Διαγραφή"
 }

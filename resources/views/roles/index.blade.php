@@ -21,6 +21,7 @@
                         <th>{{ __('ID') }}</th>
                         <th>{{ __('Name') }}</th>
                         <th>{{ __('Active') }}</th>
+                        <th>{{ __('Created At') }}</th>
                         <th>{{ __('Actions') }}</th>
                     </tr>
                     </thead>
@@ -34,6 +35,34 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.datatables.net/2.1.3/js/dataTables.js"></script>
 <script>
+
+    $(document).ready(function() {
+        let oTable = $('#roles-table').DataTable({
+            processing: true,
+            serverSide: true,
+            filter: true,
+            ajax: {
+                url: '{!! route('roles.getDatatableData', Request::all()) !!}',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            },
+            columnDefs: [{
+                targets: [0],
+                visible: false,
+                searchable: false
+            }],
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'name', name: 'name'},
+                {data: 'is_active', name: 'is_active'},
+                {data: 'created_at', name: 'created_at'},
+                {data: 'actions', name: 'actions'}
+            ],
+            order: [[0, 'desc']]
+        });
+    });
 
     function add(){
         $('#role-create').trigger("reset");

@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RoleRequest;
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
-class RolesController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,6 +19,7 @@ class RolesController extends Controller
     {
         $with = [
             'roles' => Role::all(),
+            'permissions' => Permission::all(),
         ];
 
         return view('roles.index', $with);
@@ -36,12 +38,14 @@ class RolesController extends Controller
      */
     public function store(RoleRequest $request)
     {
-        $formData = $request->validated();
+        $formData = Arr::except($request->validated(), 'permissions');
+        $permissions = $request->validated()['permissions'] ?? null;
 
         try{
             DB::beginTransaction();
 
-            Role::create($formData);
+            $role = Role::create($formData);
+            $role->permissions()->sync($permissions);
 
             DB::commit();
         }catch (\Exception $e){
@@ -59,6 +63,7 @@ class RolesController extends Controller
     {
         $with = [
             'role' => $role,
+            'permissions' => Permission::all(),
         ];
 
         return view('roles.edit', $with);
@@ -69,12 +74,14 @@ class RolesController extends Controller
      */
     public function update(RoleRequest $request, Role $role)
     {
-        $formData = $request->validated();
+        $formData = Arr::except($request->validated(), 'permissions');
+        $permissions = $request->validated()['permissions'] ?? null;
 
         try{
             DB::beginTransaction();
 
             $role->update($formData);
+            $role->permissions()->sync($permissions);
 
             DB::commit();
         }catch (\Exception $e){

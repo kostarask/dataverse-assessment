@@ -29,6 +29,7 @@ class RoleRequest extends FormRequest
                 Rule::unique('roles')->ignore($this->id),
             ],
             "is_active" => "nullable|boolean",
+            "permissions.*" => "nullable"
         ];
     }
 }

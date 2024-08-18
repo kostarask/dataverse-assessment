@@ -19,6 +19,17 @@
                 </div>
             </div>
         </div>
+        <label class="form-control-label">{{ __('Permissions') }}</label>
+        @foreach($permissions as $permission)
+            <div class="col-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="{{ $permission->id }}" name="permissions[]" id="permissions[{{ $permission->id }}]" {{ isset($role) && $role?->permissions?->contains($permission) ? 'checked' : ''}}>
+                    <label class="form-check-label" for="roles[{{ $permission->id }}]">
+                        {{ __($permission->name) }}
+                    </label>
+                </div>
+            </div>
+        @endforeach
         <div class="col-sm-offset-2 col-sm-10"><br/>
             <button type="submit" class="btn btn-primary" id="btn-save">Submit</button>
         </div>
@@ -33,33 +44,6 @@
     let flashSuccess = $(".flash-notification-success");
     let flashError = $(".flash-notification-error");
 
-    let csrfToken = '{{ csrf_token() }}';
-    let oTable = $('#roles-table').DataTable({
-        processing: true,
-        serverSide: true,
-        filter: true,
-        ajax: {
-            url: '{!! route('roles.getDatatableData', Request::all()) !!}',
-            type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': csrfToken
-            }
-        },
-        columnDefs: [{
-            targets: [0],
-            visible: false,
-            searchable: false
-        }],
-        columns: [
-            { data: 'id', name:'id' },
-            { data: 'name', name:'name' },
-            { data: 'is_active', name:'is_active' },
-            { data: 'actions', name:'actions' }
-        ],
-        order: [[0, 'desc']]
-    });
-
-
     $('#createRoleForm').submit(function(e) {
         e.preventDefault();
 
@@ -70,7 +54,7 @@
             url: "{{ route('role.store') }}",
             type:'POST',
             headers: {
-                'X-CSRF-TOKEN': csrfToken
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
             data: formData,
             cache:false,
@@ -78,7 +62,7 @@
             processData: false,
             success: (data) => {
                 $("#role-create-modal").modal('hide');
-                oTable.draw(false);
+                $('#roles-table').DataTable().ajax.reload();
                 $("#btn-save").html('Submit');
                 $("#btn-save").attr("disabled", false);
 
@@ -117,7 +101,7 @@
             url: "{{ route('role.update', $role ?? '') }}",
             type:'POST',
             headers: {
-                'X-CSRF-TOKEN': csrfToken
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
             data: formData,
             cache:false,

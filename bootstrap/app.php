@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\HttpsMiddleware;
 use App\Http\Middleware\Localization;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -13,7 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'localization' => Localization::class
+            'localization' => Localization::class,
+            'httpsEnforce' => HttpsMiddleware::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

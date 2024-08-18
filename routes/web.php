@@ -9,7 +9,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('localization')->group(function () {
+Route::middleware(['localization', 'httpsEnforce'])->group(function () {
 
     Route::middleware('auth')->prefix('users')->group( function () {
         Route::get('/index', [UserController::class, 'index'])->name('user.index');

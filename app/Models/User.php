@@ -52,4 +52,9 @@ class User extends Authenticatable
         })->exists();
     }
 
+    public function isAdmin()
+    {
+        return $this->roles->count() > 1 || ($this->roles->count() === 1 && $this->roles->first()->name !== Role::USER);
+    }
+
 }

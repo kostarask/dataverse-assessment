@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends Model
 {
+    public const ADMIN = 'Technical Administrator';
+    public const USERc = 'User and Subscription Administrator';
+    public const QA_ADMIN = 'Questions/Answers Administrator';
+    public const CONTENT_ADMIN = 'Content Administrator';
+    public const LEGAL_ADMIN = 'Legal Administrator';
+    public const NEWSLETTER_ADMIN = 'Newsletter Administrator';
+    public const USER = 'User';
     protected $guarded = [
         'id'
     ];

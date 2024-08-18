@@ -5,7 +5,7 @@
             <div class="form-floating mb-3">
                 <div class="col-sm-12">
                     <label class="form-control-label">{{ __('Name') }}</label>
-                    <input type="text" class="form-control" id="name" name="name" value="{{ isset($permission) ? $permission->name : "" }}" placeholder="Enter Name" maxlength="50">
+                    <input type="text" class="form-control " id="name" name="name" value="{{ isset($permission) ? $permission->name : "" }}" placeholder="Enter Name" maxlength="50" {{ isset($permission) ? "disabled" : "" }}>
                     <span class="text-danger validation-message" id="validation-error-name"></span>
                 </div>
             </div>

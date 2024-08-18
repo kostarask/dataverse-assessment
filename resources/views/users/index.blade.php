@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-lg-12 margin-tb">
                     <div class="pull-right mb-2">
-                        <a class="btn btn-success " onClick="add()" href="javascript:void(0)">{{ __("Create User") }}</a>
+                        <a class="btn btn-success @cannot('create', \App\Models\User::class) disabled @endcannot" onClick="add()" href="javascript:void(0)">{{ __("Create User") }}</a>
                     </div>
                 </div>
             </div>

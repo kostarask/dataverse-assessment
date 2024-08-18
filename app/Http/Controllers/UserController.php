@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -15,6 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', User::class);
         $with = [
             'users' => User::all(),
             'roles' => Role::all(),
@@ -32,6 +34,7 @@ class UserController extends Controller
         $roles = $request->validated()['roles'] ?? null;
 
         try{
+            Gate::authorize('create', User::class);
             DB::beginTransaction();
 
             $user = User::create($formData);
@@ -65,6 +68,7 @@ class UserController extends Controller
         $roles = $request->validated()['roles'] ?? null;
 
         try{
+            Gate::authorize('update', $user);
             DB::beginTransaction();
 
             $user->update($formData);
@@ -85,6 +89,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         try{
+            Gate::authorize('delete', $user);
             DB::beginTransaction();
 
             $user->roles()->detach();

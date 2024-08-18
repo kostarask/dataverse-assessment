@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RoleRequest;
 use App\Models\Permission;
 use App\Models\Role;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class RoleController extends Controller
 {
@@ -17,20 +16,14 @@ class RoleController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Role::class);
+
         $with = [
             'roles' => Role::all(),
             'permissions' => Permission::all(),
         ];
 
         return view('roles.index', $with);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -42,6 +35,7 @@ class RoleController extends Controller
         $permissions = $request->validated()['permissions'] ?? null;
 
         try{
+            Gate::authorize('create', Role::class);
             DB::beginTransaction();
 
             $role = Role::create($formData);
@@ -78,6 +72,7 @@ class RoleController extends Controller
         $permissions = $request->validated()['permissions'] ?? null;
 
         try{
+            Gate::authorize('update', $role);
             DB::beginTransaction();
 
             $role->update($formData);
@@ -97,9 +92,11 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         try{
+            Gate::authorize('delete', $role);
             DB::beginTransaction();
 
             $role->users()->detach();
+            $role->permissions()->detach();
             $role->delete();
 
             DB::commit();

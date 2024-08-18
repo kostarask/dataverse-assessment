@@ -1,7 +1,7 @@
-<a href="{{ route('user.edit', $user->id) }}" data-toggle="tooltip" data-original-title="Edit" class="edit btn btn-success edit">
+<a href="{{ route('user.edit', $user->id) }}" data-toggle="tooltip" data-original-title="Edit" class="edit btn btn-success edit @cannot('update', $user) disabled @endcannot">
     {{ __("Edit") }}
 </a>
-<a href="javascript:void(0)" data-url="{{ route('user.delete', $user->id) }}" data-toggle="tooltip" class="btn btn-danger delete-user-button">
+<a href="javascript:void(0)" data-url="{{ route('user.delete', $user->id) }}" data-toggle="tooltip" class="btn btn-danger delete-user-button @cannot('delete', $user)disabled @endcannot">
     {{ __("Delete") }}
 </a>
 

@@ -11,15 +11,21 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{ route('home') }}">{{ __('Home') }}</a>
                 </li>
+                @can('viewAny', \App\Models\User::class)
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{ route('user.index') }}">{{ __('Users') }}</a>
                 </li>
+                @endcan
+                @can('viewAny', \App\Models\Role::class)
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{ route('role.index') }}">{{ __('Roles') }}</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ route('permission.index') }}">{{ __('Permissions') }}</a>
-                </li>
+                @endcan
+                @can('viewAny', \App\Models\Permission::class)
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ route('permission.index') }}">{{ __('Permissions') }}</a>
+                    </li>
+                @endcan
             </ul>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#bsbNavbar" aria-controls="bsbNavbar" aria-label="Toggle Navigation">
                 <i class="bi bi-three-dots"></i>

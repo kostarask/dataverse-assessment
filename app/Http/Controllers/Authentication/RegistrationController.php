@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +21,9 @@ class RegistrationController extends Controller
         try{
             DB::beginTransaction();
 
-            $user   =   User::create($formData);
+            $user = User::create($formData);
+            $role = Role::where('name', Role::USER)->first()->id;
+            $user->roles()->sync($role);
 
             DB::commit();
         }catch (\Exception $e){

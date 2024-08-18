@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\OneTimeCommands;
 
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Console\Command;
@@ -28,9 +29,32 @@ class CreateDummyData extends Command
      */
     public function handle()
     {
+        $this->createPermissions();
         $this->createRoles();
         $this->createRandomUsers();
         $this->createAdminUser();
+    }
+
+    private function createPermissions(): void
+    {
+        $permissionNames = [
+            'Create User',
+            'Edit User',
+            'Delete User',
+            'Create Role',
+            'Edit Role',
+            'Delete Role',
+            'Create Permission',
+            'Edit Permission',
+            'Delete Permission',
+        ];
+
+        foreach ($permissionNames as $permissionName) {
+            Permission::create([
+                'name' => $permissionName,
+                'is_active' => true,
+            ]);
+        }
     }
 
     private function createRoles()
@@ -45,10 +69,14 @@ class CreateDummyData extends Command
         ];
 
         foreach ($roleNames as $roleName) {
-            Role::create([
+            $role = Role::create([
                 'name' => $roleName,
                 'is_active' => true,
             ]);
+
+            if (in_array($role->name, Arr::take($roleNames, 2))) {
+                $role->permissions()->sync(Permission::all()->pluck('id')->toArray());
+            }
         }
     }
 

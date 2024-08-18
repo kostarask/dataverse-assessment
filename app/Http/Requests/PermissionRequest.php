@@ -24,6 +24,7 @@ class PermissionRequest extends FormRequest
     {
         return [
             "name" => [
+                "sometimes",
                 "required",
                 "string",
                 Rule::unique('permissions')->ignore($this->id),

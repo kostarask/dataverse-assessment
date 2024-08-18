@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PermissionRequest;
-use App\Http\Requests\UpdatePermissionRequest;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class PermissionController extends Controller
 {
@@ -16,20 +16,13 @@ class PermissionController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Permission::class);
         $with = [
             'permissions' => Permission::all(),
             'roles' => Role::all()
         ];
 
         return view('permissions.index', $with);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -41,6 +34,7 @@ class PermissionController extends Controller
         $roles = $request->validated()['roles'] ?? null;
 
         try{
+            Gate::authorize('create', Permission::class);
             DB::beginTransaction();
 
             $permission = Permission::create($formData);
@@ -73,13 +67,12 @@ class PermissionController extends Controller
      */
     public function update(PermissionRequest $request, Permission $permission)
     {
-        $formData = Arr::except($request->validated(), 'roles');
         $roles = $request->validated()['roles'] ?? null;
 
         try{
+            Gate::authorize('update', $permission);
             DB::beginTransaction();
 
-            $permission->update($formData);
             $permission->roles()->sync($roles);
 
             DB::commit();
@@ -97,6 +90,7 @@ class PermissionController extends Controller
     public function destroy(Permission $permission)
     {
         try{
+            Gate::authorize('delete', $permission);
             DB::beginTransaction();
 
             $permission->roles()->detach();

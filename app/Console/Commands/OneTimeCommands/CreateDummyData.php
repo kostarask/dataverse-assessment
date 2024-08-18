@@ -32,21 +32,27 @@ class CreateDummyData extends Command
         $this->createPermissions();
         $this->createRoles();
         $this->createRandomUsers();
+        $this->createSimpleUser();
         $this->createAdminUser();
     }
 
     private function createPermissions(): void
     {
         $permissionNames = [
+            'View User',
             'Create User',
             'Edit User',
             'Delete User',
+            'View Role',
             'Create Role',
             'Edit Role',
             'Delete Role',
+            'View Permission',
             'Create Permission',
             'Edit Permission',
             'Delete Permission',
+            'Delete Admin',
+            'Edit Admin',
         ];
 
         foreach ($permissionNames as $permissionName) {
@@ -66,6 +72,7 @@ class CreateDummyData extends Command
             'Content Administrator',
             'Legal Administrator',
             'Newsletter Administrator',
+            'User',
         ];
 
         foreach ($roleNames as $roleName) {
@@ -91,6 +98,24 @@ class CreateDummyData extends Command
             $randomRoles = Arr::random(Role::pluck('id')->toArray(), $randomCount);
             $user->roles()->sync($randomRoles);
         }
+    }
+
+    private function createSimpleUser()
+    {
+        $username = $this->ask('Please provide username for simple user. Default:', 'user');
+        $password = $this->ask('Please provide password for simple user. Default:', 'password');
+
+        $user = User::create([
+            'name' => 'user',
+            'username' => $username,
+            'is_active' => true,
+            'email_verified_at' => now(),
+            'email' => 'demo@user.com',
+            'password' => $password,
+        ]);
+
+        $role = Role::where('name', Role::USER)->first()->id;
+        $user->roles()->sync($role);
     }
 
     private function createAdminUser()

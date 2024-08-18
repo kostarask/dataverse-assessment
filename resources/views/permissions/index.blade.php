@@ -20,6 +20,7 @@
                     <tr>
                         <th>{{ __('ID') }}</th>
                         <th>{{ __('Name') }}</th>
+                        <th>{{ __('Roles') }}</th>
                         <th>{{ __('Created At') }}</th>
                         <th>{{ __('Actions') }}</th>
                     </tr>
@@ -55,6 +56,7 @@
             columns: [
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
+                {data: 'roles', name: 'roles'},
                 {data: 'created_at', name: 'created_at'},
                 {data: 'actions', name: 'actions'}
             ],

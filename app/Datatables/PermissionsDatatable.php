@@ -24,6 +24,11 @@ class PermissionsDatatable
         $permissions = Permission::select('*');
 
         return datatables()->of($permissions)
+            ->addColumn('roles', function ($permission) {
+                return view('permissions.permission-roles-table', [
+                    'roles' => $permission->roles->pluck('name')->toArray(),
+                ]);
+            })
             ->addColumn('actions', function ($permission) {
                 return view('permissions.actions', [
                     'permission' => $permission,

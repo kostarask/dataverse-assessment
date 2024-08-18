@@ -16,7 +16,12 @@ class UserIsActive implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $user = User::where('username', $value)->first();
-        if (! $user->is_active) {
+
+        if (! $user) {
+            $fail("No user with this username exists.");
+        }
+
+        if (! $user?->is_active) {
             $fail("User is inactive.");
         }
     }

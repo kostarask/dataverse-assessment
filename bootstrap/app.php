@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\HttpsMiddleware;
 use App\Http\Middleware\Localization;
+use App\Http\Middleware\LoginThrottleMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,7 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'localization' => Localization::class,
-            'httpsEnforce' => HttpsMiddleware::class
+            'httpsEnforce' => HttpsMiddleware::class,
+            'loginThrottle' => LoginThrottleMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

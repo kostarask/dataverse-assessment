@@ -42,9 +42,12 @@ Route::middleware(['localization', 'httpsEnforce'])->group(function () {
 
     Route::get('/localization/{locale}', LocalizationController::class )->name('localization');
     Route::get('/login', [LoginController::class, 'login'])->name('login');
-    Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('user.authenticate');
     Route::post('/logout', [LoginController::class, 'logout'])->name('user.logout');
     Route::get('/registration', [RegistrationController::class, 'registration'])->name('user.registration');
-    Route::post('/register', [RegistrationController::class, 'register'])->name('user.register');
+
+    Route::middleware('loginThrottle')->group( function () {
+        Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('user.authenticate');
+        Route::post('/register', [RegistrationController::class, 'register'])->name('user.register');
+    });
 
 });

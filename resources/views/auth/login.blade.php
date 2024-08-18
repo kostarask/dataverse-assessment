@@ -70,7 +70,7 @@
                 },
                 error: function (error) {
                     let validationErrors = error.responseJSON.errors;
-                    $('#username').removeClass('is-invalid').addClass('is-valid');
+                    $('#username').removeClass('is-invalid');
                     $('.validation-message').text('');
 
                     for (let validationError in validationErrors) {

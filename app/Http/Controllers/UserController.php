@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -97,6 +99,12 @@ class UserController extends Controller
             $user->delete();
 
             DB::commit();
+        }catch (AuthorizationException $authorizationException){
+            DB::rollBack();
+            return response()->json(['message' => $authorizationException->getMessage()], $authorizationException->getCode());
+        }catch (QueryException $queryException){
+            DB::rollBack();
+            return response()->json(['message' => $queryException->getMessage()], 500);
         }catch (\Exception $e){
             DB::rollBack();
             return response()->json(['message' => $e->getMessage()]);

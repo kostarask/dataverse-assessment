@@ -44,9 +44,11 @@ class RolePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Role $role): bool
+    public function delete(User $user, Role $role): Response
     {
-        return $user->hasPermission(Permission::CAN_DELETE_ROLE);
+        return $user->hasPermission(Permission::CAN_DELETE_ROLE)
+            ? Response::allow()
+            : Response::deny('You are not authorized to delete this role.', 403);
     }
 
     /**

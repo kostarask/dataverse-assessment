@@ -43,9 +43,11 @@ class PermissionPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Permission $permission): bool
+    public function delete(User $user, Permission $permission): Response
     {
-        return $user->hasPermission(Permission::CAN_DELETE_PERMISSION);
+        return $user->hasPermission(Permission::CAN_DELETE_PERMISSION)
+            ? Response::allow()
+            : Response::deny('You are not authorized to delete this permission.', 403);
     }
 
     /**

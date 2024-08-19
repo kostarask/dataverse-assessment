@@ -42,7 +42,10 @@
                         }
                     },
                     error: function (error) {
-                        flashError.text(error.message).show(error.message);
+                        let responseError = error.responseJSON;
+                        let message = responseError['message'];
+
+                        flashError.text(message).show(message);
                         flashError.fadeTo(2000, 500).slideUp(500, function(){
                             flashError.slideUp(500);
                         });

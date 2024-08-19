@@ -11,7 +11,11 @@ As requested, the application supports user, role and permission CRUD operations
 Clone this repository and install all Composer dependencies.
 ```
 git clone git@github.com:kostarask/dataverse-assessment.git
+```
+```
 cd dataverse-assessment
+```
+```
 composer install
 ```
 
@@ -37,14 +41,13 @@ sail artisan migrate
 Create dummy users, simple and admin user
 ```
 sail artisan one-time:create-dummy-data
-
-Choose:
-    -Number of dummy users (default: 100)
-    -Username of simple user (default: "user")
-    -Password of simple user (default: "password")
-    -Username of admin user (default: "admin")
-    -Password of admin user (default: "admin")
-
-Simple user has no permissions
-Admin user has all permissions
 ```
+### Choose:
+* Number of dummy users (default: 100)
+* Username of simple user (default: "user")
+* Password of simple user (default: "password")
+* Username of admin user (default: "admin"
+* Password of admin user (default: "admin") 
+### Notes:
+* Simple user has no permissions
+* Admin user has all permissions

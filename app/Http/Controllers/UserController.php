@@ -51,6 +51,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        Gate::authorize('update', $user);
         $with = [
             'user' => $user,
             'roles' => Role::all(),

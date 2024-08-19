@@ -55,6 +55,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
+        Gate::authorize('update', $role);
         $with = [
             'role' => $role,
             'permissions' => Permission::all(),
